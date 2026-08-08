@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage Barber Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #141414;
+    --bg-alt: #1c1c1c;
+    --text: #f2f2f0;
+    --muted: #a3a19c;
+    --accent: #c9a24b;
+    --border: #2c2c2c;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    font-family: "Roboto", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 300;
+  }
+  h1, h2, .brand{ font-family: "Oswald", "Segoe UI", sans-serif; text-transform: uppercase; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header{ position: absolute; top: 0; left: 0; right: 0; z-index: 5; padding: 24px 0; }
+  .header-inner{ display: flex; justify-content: space-between; align-items: center; }
+  .brand{ font-weight: 700; letter-spacing: .06em; font-size: 1.3rem; }
+  .brand span{ color: var(--accent); }
+  nav a{ margin-left: 26px; color: rgba(255,255,255,.75); text-decoration: none; font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; }
+
+  .hero{
+    position: relative;
+    min-height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,.35) 0%, rgba(10,10,10,.85) 100%),
+      url("https://images.unsplash.com/photo-1699641975121-5c3f55a553e5?auto=format&fit=crop&w=1600&q=80") center 30%/cover no-repeat;
+    filter: none;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .hero-inner{ max-width: 640px; padding: 130px 24px 100px; }
+  .hero p.tag{ letter-spacing: .35em; text-transform: uppercase; color: var(--accent); font-size: .75rem; margin-bottom: 22px; font-weight: 600; }
+  .hero h1{ font-size: clamp(2.3rem, 5.5vw, 3.6rem); margin: 0 0 22px; font-weight: 700; line-height: 1.15; }
+  .hero p.sub{ color: var(--muted); max-width: 42ch; margin: 0 auto 36px; font-size: 1.05rem; }
+  .btn{
+    display: inline-block;
+    background: var(--accent);
+    color: #141414;
+    padding: 15px 34px;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-family: "Oswald", sans-serif;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Shared "eyebrow" label used across sections, echoing the hero tag */
+  .eyebrow{ letter-spacing: .35em; text-transform: uppercase; color: var(--accent); font-size: .72rem; margin: 0 0 16px; font-weight: 600; }
+
+  section.services{ padding: 90px 0 70px; }
+  h2.section-title{ text-align: center; font-size: 2rem; margin-bottom: 14px; letter-spacing: .04em; font-weight: 600; }
+  p.section-sub{ text-align: center; color: var(--muted); max-width: 46ch; margin: 0 auto 50px; font-size: .92rem; line-height: 1.7; }
+  .grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
+  .card{ background: var(--bg-alt); padding: 38px 26px; text-align: center; position: relative; }
+  .card .icon{ font-size: 1.8rem; margin-bottom: 18px; color: var(--accent); }
+  .card h3{ margin: 0 0 12px; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .04em; font-family: "Oswald", sans-serif; }
+  .card p{ color: var(--muted); font-size: .88rem; margin: 0; line-height: 1.7; }
+  .card .tag{ display: block; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-weight: 600; opacity: .85; }
+  .card .price{ display: block; margin-top: 16px; font-family: "Oswald", sans-serif; color: var(--accent); font-weight: 600; font-size: 1.1rem; letter-spacing: .03em; }
+
+  /* Menu cards that carry a photo background instead of an icon */
+  .card.card-photo{
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+  }
+  .card.card-photo::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,20,20,.15) 0%, rgba(10,10,10,.55) 45%, rgba(8,8,8,.94) 100%);
+  }
+  .card.card-photo > *{ position: relative; z-index: 1; }
+  .card.card-photo h3{ color: #fff; }
+  .card.card-photo p{ color: rgba(242,242,240,.85); }
+
+  .stats{ display: flex; justify-content: center; gap: 70px; padding: 60px 0 90px; flex-wrap: wrap; text-align: center; }
+  .stats div strong{ display: block; font-family: "Oswald", sans-serif; font-size: 2rem; color: var(--accent); }
+  .stats div span{ color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+
+  /* Gallery */
+  section.gallery{ padding: 20px 0 90px; }
+  .gallery-grid{ display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; gap: 12px; }
+  .gallery-grid .g-item{ position: relative; overflow: hidden; background: var(--bg-alt); }
+  .gallery-grid .g-item:nth-child(1){ grid-column: span 2; grid-row: span 2; }
+  .gallery-grid .g-item img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+  .gallery-grid .g-item:hover img{ transform: scale(1.06); }
+  .gallery-grid .g-caption{
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 16px;
+    background: linear-gradient(180deg, transparent, rgba(8,8,8,.9));
+    font-family: "Oswald", sans-serif; font-size: .74rem; text-transform: uppercase;
+    letter-spacing: .06em; color: #fff;
+  }
+
+  /* Ambiente / Nosso Espaço */
+  .ambiente{
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    background:
+      linear-gradient(90deg, rgba(10,10,10,.94) 0%, rgba(10,10,10,.72) 45%, rgba(10,10,10,.3) 100%),
+      url("https://images.unsplash.com/photo-1758812818698-6ecd792a87da?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    padding: 90px 0;
+  }
+  .ambiente-content{ max-width: 480px; }
+  .ambiente h2.section-title{ text-align: left; margin-bottom: 20px; }
+  .ambiente p.lead{ color: var(--muted); font-size: 1rem; line-height: 1.75; margin: 0; }
+  .ambiente ul{ list-style: none; padding: 0; margin: 30px 0 0; }
+  .ambiente li{ padding: 12px 0; border-top: 1px solid rgba(255,255,255,.12); color: var(--muted); font-size: .92rem; }
+  .ambiente li:first-child{ border-top: none; }
+  .ambiente li::before{ content: "\2014\0020"; color: var(--accent); }
+
+  /* Horário de funcionamento */
+  .hours-section{ padding: 80px 0; background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .hours-wrap{ display: flex; justify-content: space-between; gap: 60px; flex-wrap: wrap; align-items: center; }
+  .hours-list{ flex: 1 1 300px; }
+  .hours-list .row{ display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--border); font-size: .92rem; }
+  .hours-list .row span:first-child{ color: var(--text); font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .03em; font-size: .82rem; }
+  .hours-list .row span:last-child{ color: var(--muted); }
+  .hours-cta{ flex: 1 1 280px; text-align: center; }
+  .hours-cta p{ color: var(--muted); font-size: .92rem; line-height: 1.7; margin: 0 0 24px; }
+
+  /* Depoimentos */
+  .testimonials{ padding: 90px 0; }
+  .testi-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 46px; }
+  .testi-card{ background: var(--bg-alt); border: 1px solid var(--border); padding: 32px 28px; }
+  .testi-card .stars{ color: var(--accent); margin-bottom: 14px; font-size: .85rem; letter-spacing: .12em; }
+  .testi-card p.quote{ color: var(--text); font-size: .93rem; line-height: 1.75; margin: 0 0 18px; font-style: italic; }
+  .testi-card .author{ color: var(--accent); font-family: "Oswald", sans-serif; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+  .testi-note{ text-align: center; color: var(--muted); font-size: .74rem; margin-top: 34px; }
+
+  .cta-strip{
+    background:
+      linear-gradient(rgba(201,162,75,.92), rgba(201,162,75,.92)),
+      url("https://plus.unsplash.com/premium_photo-1664299024283-5a643800711a?auto=format&fit=crop&w=1400&q=80") center 30%/cover no-repeat;
+    color: #141414; text-align: center; padding: 90px 0;
+  }
+  .cta-strip h2{ margin: 0 0 24px; }
+  .cta-strip .btn{ background: #141414; color: var(--accent); }
+  footer{ text-align: center; padding: 24px 0; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); }
+
+  @media (max-width: 900px){
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
+    .gallery-grid .g-item:nth-child(1){ grid-column: span 2; grid-row: span 1; }
+    .gallery-grid .g-caption{ font-size: .8rem; }
+    .testi-grid{ grid-template-columns: 1fr; }
+    .ambiente{ background-position: 75% center; }
+    .ambiente-content{ max-width: 100%; }
+    .card .tag{ font-size: .75rem; }
+    .eyebrow{ font-size: .78rem; }
+    .testi-note{ font-size: .8rem; }
+  }
+  @media (max-width: 640px){
+    header{ position: relative; padding: 18px 0; background: var(--bg); }
+    .hero{ clip-path: none; margin-top: 0; min-height: 480px; }
+    .header-inner{ flex-direction: column; gap: 12px; }
+    nav{ display: flex; flex-wrap: wrap; justify-content: center; }
+    nav a{ margin: 0 10px; }
+    .hero-inner{ padding: 60px 20px 70px; }
+    .grid{ grid-template-columns: 1fr; }
+    .stats{ gap: 34px; padding: 46px 0 60px; }
+    .gallery-grid{ grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .gallery-grid .g-item:nth-child(1){ grid-column: span 1; }
+    section.services{ padding: 60px 0 40px; }
+    .ambiente{ padding: 60px 0; text-align: center; min-height: 0; }
+    .ambiente h2.section-title{ text-align: center; }
+    .ambiente li{ text-align: left; }
+    .hours-wrap{ gap: 36px; }
+    .testimonials, .hours-section, section.gallery{ padding: 60px 0; }
+    .cta-strip{ padding: 60px 0; }
+  }
+  @media (max-width: 480px){
+    .hero{ min-height: 420px; }
+    .hero-inner{ padding: 50px 18px 56px; }
+    .card.card-photo{ min-height: 260px; }
+    .gallery-grid{ grid-auto-rows: 190px; }
+    .stats{ gap: 24px; }
+    .hours-wrap{ gap: 28px; }
+    section.services, .testimonials, .hours-section, section.gallery, .ambiente, .cta-strip{ padding-top: 46px; padding-bottom: 46px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">Vintage <span>Barber</span></div>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#ambiente">Ambiente</a>
+        <a href="#contato">Agenda</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="tag">Barbearia clássica</p>
+      <h1>Estilo que não sai de moda.</h1>
+      <p class="sub">Cortes clássicos, barba na navalha e um ambiente feito para você relaxar de verdade.</p>
+      <a href="#contato" class="btn">Agendar horário</a>
+    </div>
+  </section>
+
+  <section class="services" id="servicos">
+    <div class="container">
+      <h2 class="section-title">Serviços</h2>
+      <p class="section-sub">Tudo pensado no detalhe: da tesoura à navalha, do óleo de barba ao café enquanto você espera.</p>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">Cortes</span>
+          <div class="icon">✂️</div>
+          <h3>Corte clássico</h3>
+          <p>Tesoura e máquina, com acabamento na navalha e toalha quente.</p>
+          <span class="price">R$ 45,00</span>
+        </div>
+        <div class="card card-photo" style="background-image:url('https://images.unsplash.com/photo-1605497788245-3c047575d789?auto=format&fit=crop&w=700&q=80')">
+          <span class="tag">Cortes</span>
+          <h3>Degradê navalhado</h3>
+          <p>Fade personalizado com risco e desenho na navalha.</p>
+          <span class="price">R$ 55,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Cortes</span>
+          <div class="icon">🧒</div>
+          <h3>Corte infantil</h3>
+          <p>Todo o cuidado e paciência para os clientes mirins.</p>
+          <span class="price">R$ 35,00</span>
+        </div>
+        <div class="card card-photo" style="background-image:url('https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=700&q=80')">
+          <span class="tag">Barba</span>
+          <h3>Barba na navalha</h3>
+          <p>Toalha quente, óleos essenciais e modelagem completa.</p>
+          <span class="price">R$ 40,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Barba</span>
+          <div class="icon">🪒</div>
+          <h3>Barboterapia</h3>
+          <p>Hidratação profunda, massagem facial e compressa quente.</p>
+          <span class="price">R$ 60,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Combos</span>
+          <div class="icon">💈</div>
+          <h3>Combo corte + barba</h3>
+          <p>Nosso clássico: cabelo e barba na mesma sessão, com desconto.</p>
+          <span class="price">R$ 80,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Combos</span>
+          <div class="icon">🎩</div>
+          <h3>Combo completo</h3>
+          <p>Corte + barba + sobrancelha, pronto pra sair renovado.</p>
+          <span class="price">R$ 95,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Extras</span>
+          <div class="icon">👁️</div>
+          <h3>Sobrancelha na navalha</h3>
+          <p>Alinhamento preciso pra completar o visual.</p>
+          <span class="price">R$ 20,00</span>
+        </div>
+        <div class="card">
+          <span class="tag">Extras</span>
+          <div class="icon">👣</div>
+          <h3>Pézinho / acabamento</h3>
+          <p>Manutenção rápida entre um corte e outro.</p>
+          <span class="price">R$ 15,00</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div><strong>25</strong><span>Anos de tradição</span></div>
+        <div><strong>4.9</strong><span>Avaliação média</span></div>
+        <div><strong>12k+</strong><span>Cortes realizados</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="container">
+      <h2 class="section-title">Galeria</h2>
+      <p class="section-sub">Um pouco do dia a dia da barbearia — cadeiras, ferramentas e o resultado final.</p>
+      <div class="gallery-grid">
+        <div class="g-item">
+          <img src="https://plus.unsplash.com/premium_photo-1661507250205-79ffef5cdeb5?auto=format&fit=crop&w=1000&q=80" alt="Barbeiro finalizando o desenho da barba de um cliente na cadeira">
+          <span class="g-caption">Acabamento na navalha</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1672257493395-c6cb634397e2?auto=format&fit=crop&w=800&q=80" alt="Interior da barbearia com parede de tijolinho e cadeiras">
+          <span class="g-caption">Nosso salão</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1764712784236-7019d1565cb7?auto=format&fit=crop&w=800&q=80" alt="Pincéis e navalhas organizados na prateleira">
+          <span class="g-caption">Ferramentas de trabalho</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1757283213626-3178d3ab8800?auto=format&fit=crop&w=800&q=80" alt="Letreiro tradicional de barbearia na fachada">
+          <span class="g-caption">Nosso letreiro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ambiente" id="ambiente">
+    <div class="container">
+      <div class="ambiente-content">
+        <p class="eyebrow">Nosso espaço</p>
+        <h2 class="section-title">Um ambiente pra ficar</h2>
+        <p class="lead">Poltronas de couro, ferragens originais e aquele clima de barbearia de esquina que já não se vê tanto por aí. Aqui, esperar a vez também faz parte da experiência.</p>
+        <ul>
+          <li>Poltronas de couro e detalhes vintage originais</li>
+          <li>Trilha sonora com jazz e soul, tocando em vinil</li>
+          <li>Café coado e água com gás enquanto você espera</li>
+          <li>Toalhas quentes e produtos importados em cada atendimento</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="hours-section">
+    <div class="container hours-wrap">
+      <div class="hours-list">
+        <p class="eyebrow">Horário de funcionamento</p>
+        <div class="row"><span>Terça a sexta</span><span>9h às 20h</span></div>
+        <div class="row"><span>Sábado</span><span>8h às 18h</span></div>
+        <div class="row"><span>Domingo e segunda</span><span>Fechado</span></div>
+      </div>
+      <div class="hours-cta">
+        <p class="eyebrow" style="text-align:center;">Como agendar</p>
+        <p>Prefere garantir seu horário sem sair de casa? Marque pelo WhatsApp ou Instagram e chegue na hora certa.</p>
+        <a href="#" class="btn">Agendar pelo WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title">O que dizem por aí</h2>
+      <p class="section-sub">Alguns comentários de quem já passou pela cadeira.</p>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Melhor barba na navalha que já fiz, virei cliente fixo. Atenção a cada detalhe."</p>
+          <div class="author">Marcelo</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Ambiente com muito estilo e atendimento no capricho do início ao fim."</p>
+          <div class="author">Rafael</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"O combo corte + barba tem o melhor custo-benefício que já vi na região."</p>
+          <div class="author">Diego</div>
+        </div>
+      </div>
+      <p class="testi-note">*Depoimentos ilustrativos, criados apenas para fins de demonstração deste site.</p>
+    </div>
+  </section>
+
+  <section class="cta-strip" id="contato">
+    <div class="container">
+      <h2>Chegou a hora do seu corte</h2>
+      <a href="#" class="btn">Marcar horário</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Projeto de demonstração criado por GirottoWebSites
+    </div>
+  </footer>
+</body>
+</html>

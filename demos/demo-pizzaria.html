@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Napoli — Pizzaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fff8f0;
+    --bg-alt: #ffffff;
+    --text: #2b1c14;
+    --muted: #7a6157;
+    --accent: #c1402b;
+    --accent-dark: #932f1f;
+    --gold: #d9a441;
+    --green: #4c7a4f;
+    --border: #f0ddc9;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    font-family: "Lora", Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  h1, h2, .brand{ font-family: "Abril Fatface", Georgia, serif; font-weight: 400; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .checker{
+    background-image: repeating-linear-gradient(45deg, rgba(193,64,43,.05) 0 14px, transparent 14px 28px);
+  }
+
+  header{ padding: 22px 0; border-bottom: 3px solid var(--accent); }
+  .header-inner{ display: flex; justify-content: space-between; align-items: center; }
+  .brand{ font-size: 1.5rem; color: var(--accent-dark); }
+  nav a{ margin-left: 24px; color: var(--text); text-decoration: none; font-size: .95rem; }
+
+  .hero{ padding: 60px 0; }
+  .hero-grid{ display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+  .hero-text p.tag{ letter-spacing: .2em; text-transform: uppercase; color: var(--green); font-size: .8rem; margin-bottom: 16px; font-family: "Lora", serif; font-weight: 600; }
+  .hero-text h1{ font-size: clamp(2.3rem, 5vw, 3.6rem); margin: 0 0 20px; line-height: 1.15; color: var(--accent-dark); }
+  .hero-text p.sub{ color: var(--muted); max-width: 42ch; margin: 0 0 32px; font-size: 1.08rem; line-height: 1.7; }
+  .btn{
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: .95rem;
+    font-family: "Lora", serif;
+    font-weight: 600;
+  }
+  .hero-photo{
+    height: 420px;
+    border-radius: 12px;
+    background: url("https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+    box-shadow: 0 20px 40px rgba(147,47,31,.25);
+    position: relative;
+  }
+  .hero-photo::after{
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    z-index: -1;
+  }
+
+  section.menu{ padding: 80px 0; }
+  h2.section-title{ text-align: center; font-size: 2.3rem; margin-bottom: 8px; color: var(--accent-dark); }
+  p.section-sub{ text-align: center; color: var(--muted); max-width: 50ch; margin: 0 auto 50px; }
+
+  .menu-group{ margin-bottom: 54px; }
+  .menu-group:last-child{ margin-bottom: 0; }
+  .cat-title{ text-align: center; font-size: 1.55rem; color: var(--accent-dark); margin: 0 0 28px; }
+  .cat-note{ display: block; font-family: "Lora", serif; font-weight: 400; font-size: .78rem; color: var(--muted); letter-spacing: 0; text-transform: none; margin-top: 6px; }
+
+  .dishes{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .dishes-sm{ grid-template-columns: repeat(2, 1fr); max-width: 640px; margin: 0 auto; }
+  .dish{ background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 30px 26px; text-align: center; }
+  .dish .icon{ font-size: 2rem; margin-bottom: 14px; }
+  .dish h3{ margin: 0 0 10px; font-size: 1.15rem; color: var(--accent-dark); }
+  .dish p{ color: var(--muted); font-size: .9rem; margin: 0; line-height: 1.6; }
+  .dish .price{
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 18px;
+    background: var(--bg);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: .92rem;
+  }
+
+  /* Prato em destaque */
+  .feature{ padding: 84px 0; }
+  .feature-grid{ display: grid; grid-template-columns: .9fr 1.1fr; gap: 54px; align-items: center; }
+  .feature-photo{
+    height: 380px;
+    border-radius: 12px;
+    background: url("https://images.unsplash.com/photo-1616141215340-34b0e7c661c8?auto=format&fit=crop&w=1000&q=80") center/cover no-repeat;
+    box-shadow: 0 20px 40px rgba(147,47,31,.22);
+    position: relative;
+  }
+  .feature-photo::after{
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    z-index: -1;
+  }
+  .feature-text h2{ font-size: 2.1rem; margin: 0 0 16px; color: var(--accent-dark); }
+  .feature-text p.sub{ color: var(--muted); max-width: 46ch; margin: 0 0 20px; line-height: 1.7; }
+  .feature-price{ font-size: 1.7rem; font-weight: 600; color: var(--accent); margin: 0 0 26px; font-family: "Lora", serif; }
+
+  /* Ambiente */
+  .ambiente{ padding: 84px 0; background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .ambiente-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+  .ambiente-photo{
+    height: 400px;
+    border-radius: 12px;
+    background: url("https://images.unsplash.com/photo-1536622308015-0740925b8221?auto=format&fit=crop&w=1000&q=80") center/cover no-repeat;
+    box-shadow: 0 20px 40px rgba(147,47,31,.22);
+    position: relative;
+  }
+  .ambiente-photo::after{
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    z-index: -1;
+  }
+  .ambiente-text h2{ font-size: 2rem; margin: 0 0 16px; color: var(--accent-dark); }
+  .ambiente-text p.sub{ color: var(--muted); max-width: 48ch; margin: 0 0 26px; line-height: 1.7; }
+  .hours{ background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
+  .hours h3{ margin: 0 0 12px; font-size: 1.02rem; color: var(--accent-dark); font-family: "Lora", serif; font-weight: 600; }
+  .hours ul{ list-style: none; margin: 0; padding: 0; }
+  .hours li{ display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; color: var(--muted); font-size: .92rem; border-bottom: 1px dashed var(--border); }
+  .hours li:last-child{ border-bottom: none; }
+  .order-note{ color: var(--muted); font-size: .88rem; font-style: italic; margin: 0; }
+
+  /* Galeria */
+  .gallery{ padding: 84px 0; }
+  .gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 190px;
+    grid-auto-flow: dense;
+    gap: 14px;
+  }
+  .gallery-item{ border-radius: 12px; overflow: hidden; box-shadow: 0 10px 26px rgba(43,28,20,.14); }
+  .gallery-item img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
+  .gallery-item:hover img{ transform: scale(1.07); }
+  .gallery-item:first-child{ grid-column: span 2; grid-row: span 2; }
+
+  /* Depoimentos */
+  .depoimentos{ padding: 84px 0; background: var(--bg-alt); border-top: 1px solid var(--border); }
+  .depoimentos-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .depoimento{ background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 28px 26px; }
+  .depoimento .stars{ color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
+  .depoimento p.quote{ color: var(--muted); font-style: italic; line-height: 1.65; margin: 0; font-size: .95rem; }
+  .depoimento .author{ margin-top: 16px; font-weight: 600; color: var(--accent-dark); font-family: "Lora", serif; }
+  .depoimentos-note{ text-align: center; color: var(--muted); font-size: .78rem; margin: 34px 0 0; opacity: .85; }
+
+  .banner{
+    background: linear-gradient(180deg, rgba(43,28,20,.55) 0%, rgba(43,28,20,.85) 100%), url("https://images.unsplash.com/photo-1686659437288-8625c420a23b?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    color: #fff;
+    text-align: center;
+    padding: 80px 0;
+  }
+  .banner h2{ margin: 0 0 24px; font-size: 2.1rem; }
+  .banner .btn{ background: var(--gold); color: #2b1c14; }
+
+  footer{ text-align: center; padding: 26px 0; color: var(--muted); font-size: .85rem; }
+
+  /* Tablet (761px–899px): grids de 3-4 colunas viram no máximo 2 colunas.
+     Desktop (900px+) permanece intacto. */
+  @media (max-width: 899px){
+    .container{ padding: 0 20px; }
+
+    .dishes:not(.dishes-sm){ grid-template-columns: repeat(2, 1fr); gap: 22px; }
+
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
+    .gallery-item:first-child{ grid-column: span 2; grid-row: span 1; }
+
+    .depoimentos-grid{ grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+    .hero-grid{ gap: 32px; }
+    .feature-grid{ gap: 32px; }
+    .ambiente-grid{ gap: 32px; }
+  }
+
+  /* Mobile (até 760px): tudo empilha em 1 coluna. */
+  @media (max-width: 760px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-photo{ order: -1; height: 260px; }
+    .dishes{ grid-template-columns: 1fr; }
+    .dishes-sm{ grid-template-columns: 1fr; }
+
+    .feature-grid{ grid-template-columns: 1fr; }
+    .feature-photo{ order: -1; height: 260px; }
+
+    .ambiente-grid{ grid-template-columns: 1fr; }
+    .ambiente-photo{ order: -1; height: 260px; }
+
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
+    .gallery-item:first-child{ grid-column: span 2; grid-row: span 1; }
+
+    .depoimentos-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* Mobile pequeno (até 480px): ajustes finos de espaçamento e header. */
+  @media (max-width: 480px){
+    .container{ padding: 0 16px; }
+    .header-inner{ flex-wrap: wrap; row-gap: 10px; justify-content: center; text-align: center; }
+    nav a{ margin: 0 10px; }
+    .hero{ padding: 40px 0; }
+    section.menu{ padding: 50px 0; }
+    .feature, .ambiente, .gallery, .depoimentos{ padding: 50px 0; }
+    .hero-photo, .feature-photo, .ambiente-photo{ height: 200px; }
+    h2.section-title{ font-size: 1.9rem; }
+    .dish{ padding: 24px 18px; }
+    .banner{ padding: 56px 0; }
+    .banner h2{ font-size: 1.7rem; }
+  }
+
+  /* Mobile muito pequeno (até 375px): reforço extra de segurança contra overflow. */
+  @media (max-width: 375px){
+    .hero-text p.sub{ max-width: none; }
+    .feature-text p.sub{ max-width: none; }
+    .ambiente-text p.sub{ max-width: none; }
+    .hours li{ flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">🍕 Bella Napoli</div>
+      <nav>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#ambiente">Sobre</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#pedido">Delivery</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero checker">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="tag">Pizzaria artesanal</p>
+        <h1>Massa fina, forno a lenha, sabor de verdade.</h1>
+        <p class="sub">Pizzas feitas na hora com ingredientes selecionados. Peça pelo WhatsApp e receba quentinha em casa.</p>
+        <a href="#cardapio" class="btn">Ver cardápio completo</a>
+      </div>
+      <div class="hero-photo"></div>
+    </div>
+  </section>
+
+  <section class="menu" id="cardapio">
+    <div class="container">
+      <h2 class="section-title">Nosso Cardápio</h2>
+      <p class="section-sub">Da entrada à sobremesa — sempre com massa de fermentação lenta e forno a lenha.</p>
+
+      <div class="menu-group">
+        <h3 class="cat-title">Entradas</h3>
+        <div class="dishes dishes-sm">
+          <div class="dish">
+            <div class="icon">🍅</div>
+            <h3>Bruschetta della Casa</h3>
+            <p>Pão italiano tostado, tomate confit, manjericão fresco e fio de azeite extra virgem.</p>
+            <div class="price">R$ 28,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">🧄</div>
+            <h3>Pão de Alho no Forno a Lenha</h3>
+            <p>Pão artesanal com manteiga de alho, ervas finas e toque de parmesão gratinado.</p>
+            <div class="price">R$ 22,90</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <h3 class="cat-title">Pizzas Artesanais<span class="cat-note">35 cm, 8 fatias — serve até 4 pessoas</span></h3>
+        <div class="dishes">
+          <div class="dish">
+            <div class="icon">🍕</div>
+            <h3>Margherita</h3>
+            <p>Molho de tomate San Marzano, mussarela de búfala e manjericão fresco.</p>
+            <div class="price">R$ 54,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">🧀</div>
+            <h3>Quatro Queijos</h3>
+            <p>Mussarela, provolone, parmesão e gorgonzola gratinados na hora.</p>
+            <div class="price">R$ 62,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">🍖</div>
+            <h3>Calabresa Especial</h3>
+            <p>Calabresa artesanal fatiada na hora, cebola roxa e azeitonas pretas.</p>
+            <div class="price">R$ 57,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">🥚</div>
+            <h3>Portuguesa da Casa</h3>
+            <p>Presunto, ovos caipira, cebola, ervilha, azeitona e mussarela.</p>
+            <div class="price">R$ 59,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">🌶️</div>
+            <h3>Pepperoni Duplo</h3>
+            <p>Molho de tomate, mussarela e generosa dose dupla de pepperoni.</p>
+            <div class="price">R$ 64,90</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <h3 class="cat-title">Sobremesas</h3>
+        <div class="dishes dishes-sm">
+          <div class="dish">
+            <div class="icon">🍌</div>
+            <h3>Pizza Doce de Banana com Canela</h3>
+            <p>Banana caramelizada, canela, leite condensado e um toque de chocolate.</p>
+            <div class="price">R$ 46,90</div>
+          </div>
+          <div class="dish">
+            <div class="icon">☕</div>
+            <h3>Tiramisu Artesanal</h3>
+            <p>Camadas de mascarpone, café espresso e cacau, feito na casa.</p>
+            <div class="price">R$ 24,90</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature">
+    <div class="container feature-grid">
+      <div class="feature-photo"></div>
+      <div class="feature-text">
+        <p class="tag">Prato em destaque</p>
+        <h2>Quatro Queijos</h2>
+        <p class="sub">Uma combinação irresistível de mussarela, provolone, parmesão e gorgonzola, gratinados no forno a lenha até formar aquela casca dourada e o fio de queijo puxando em cada fatia. A pizza mais pedida do salão.</p>
+        <p class="feature-price">R$ 62,90</p>
+        <a href="#pedido" class="btn">Pedir esta pizza</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ambiente" id="ambiente">
+    <div class="container ambiente-grid">
+      <div class="ambiente-text">
+        <p class="tag">Nosso espaço</p>
+        <h2>O calor do forno, o clima de casa</h2>
+        <p class="sub">Vigas de madeira, mesas de família e o forno a lenha à vista formam o cenário da Bella Napoli. Um salão pensado para jantares em grupo, encontros de fim de semana e aquele happy hour com pizza fatiada no meio da mesa.</p>
+        <div class="hours">
+          <h3>Horário de funcionamento</h3>
+          <ul>
+            <li><span>Terça a sexta</span><span>18h às 23h</span></li>
+            <li><span>Sábado</span><span>18h às 00h</span></li>
+            <li><span>Domingo</span><span>18h às 22h30</span></li>
+            <li><span>Segunda</span><span>Fechado</span></li>
+          </ul>
+        </div>
+        <p class="order-note">Pedidos pelo salão, WhatsApp ou aplicativos de delivery.</p>
+      </div>
+      <div class="ambiente-photo"></div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="container">
+      <h2 class="section-title">Galeria</h2>
+      <p class="section-sub">Um gostinho da experiência Bella Napoli — do forno à mesa.</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1753351051905-8b341bdbd3aa?auto=format&fit=crop&w=900&q=80" alt="Amigos compartilhando uma pizza à mesa no salão" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1609732858591-725d6f2af10b?auto=format&fit=crop&w=600&q=80" alt="Pizza Margherita com tomate e manjericão fresco" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1767713362918-d6db856570ba?auto=format&fit=crop&w=600&q=80" alt="Fachada da pizzaria iluminada à noite" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://plus.unsplash.com/premium_photo-1747403955538-19690b77cce3?auto=format&fit=crop&w=600&q=80" alt="Pizzaiolo esticando a massa artesanal na cozinha" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1548237649-fe6ccf6d195c?auto=format&fit=crop&w=600&q=80" alt="Pizza servida com taças de vinho na mesa" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1698688334089-c68105801d02?auto=format&fit=crop&w=600&q=80" alt="Sobremesa da casa com toque de frutas vermelhas" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="depoimentos">
+    <div class="container">
+      <h2 class="section-title">O que dizem sobre a gente</h2>
+      <p class="section-sub">Depoimentos ilustrativos, criados para este projeto de demonstração.</p>
+      <div class="depoimentos-grid">
+        <div class="depoimento">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"A massa de fermentação lenta faz toda diferença — de longe a melhor pizza do bairro."</p>
+          <div class="author">— Marina</div>
+        </div>
+        <div class="depoimento">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Pedimos pelo WhatsApp e chegou quentinha em meia hora. A Quatro Queijos é surreal."</p>
+          <div class="author">— Rafael</div>
+        </div>
+        <div class="depoimento">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Ambiente super aconchegante para levar a família no fim de semana. Virou tradição por aqui."</p>
+          <div class="author">— Camila</div>
+        </div>
+      </div>
+      <p class="depoimentos-note">*Depoimentos fictícios, usados apenas para ilustrar este site de demonstração.</p>
+    </div>
+  </section>
+
+  <section class="banner" id="pedido">
+    <div class="container">
+      <h2>Peça a sua agora</h2>
+      <a href="#" class="btn">Fazer pedido</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Projeto de demonstração criado por GirottoWebSites
+    </div>
+  </footer>
+</body>
+</html>

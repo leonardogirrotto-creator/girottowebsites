@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bowl & Berry — Açaí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fbf5ff;
+    --bg-alt: #ffffff;
+    --text: #3a1f4d;
+    --muted: #7c6a8c;
+    --accent: #8b2fb0;
+    --accent-dark: #6a1f8a;
+    --pink: #ff5da2;
+    --yellow: #ffc93c;
+    --border: #ecdcf7;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    font-family: "Nunito", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  h1, h2, .brand{ font-family: "Baloo 2", "Segoe UI", sans-serif; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header{ padding: 22px 0; }
+  .header-inner{ display: flex; justify-content: space-between; align-items: center; }
+  .brand{ font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); }
+  nav a{ margin-left: 24px; color: var(--text); text-decoration: none; font-size: .95rem; font-weight: 700; }
+  nav a:hover{ color: var(--accent-dark); }
+
+  .tag{ letter-spacing: .1em; text-transform: uppercase; color: var(--pink); font-weight: 800; font-size: .8rem; margin-bottom: 16px; }
+  .sub{ color: var(--muted); max-width: 42ch; margin: 0 0 30px; font-size: 1.08rem; line-height: 1.6; }
+
+  .hero{ position: relative; padding: 40px 0 90px; overflow: hidden; }
+  .blob{
+    position: absolute;
+    top: -160px;
+    right: -160px;
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, var(--pink), var(--accent));
+    border-radius: 42% 58% 63% 37% / 41% 46% 54% 59%;
+    opacity: .18;
+    z-index: 0;
+  }
+  .hero-grid{ position: relative; z-index: 1; display: grid; grid-template-columns: 1fr .85fr; gap: 50px; align-items: center; }
+  .hero-text h1{ font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 20px; line-height: 1.15; font-weight: 800; color: var(--accent-dark); }
+  .btn{
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--pink) 100%);
+    color: #fff;
+    padding: 15px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: .95rem;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(139,47,176,.3);
+    border: none;
+    cursor: pointer;
+  }
+  .hero-stats{ display: flex; gap: 34px; margin-top: 34px; flex-wrap: wrap; }
+  .hero-stats .stat strong{ display: block; font-family: "Baloo 2"; font-size: 1.4rem; color: var(--accent-dark); }
+  .hero-stats .stat span{ font-size: .78rem; color: var(--muted); font-weight: 700; }
+  .blob-frame{
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 46% 54% 60% 40% / 45% 40% 60% 55%;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(139,47,176,.25);
+  }
+  .blob-frame img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  section.menu{ padding: 30px 0 90px; }
+  h2.section-title{ text-align: center; font-size: 2.2rem; margin-bottom: 8px; font-weight: 800; color: var(--accent-dark); }
+  p.section-sub{ text-align: center; color: var(--muted); max-width: 50ch; margin: 0 auto 50px; }
+  .dishes{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .dish{ background: var(--bg-alt); border: 2px solid var(--border); border-radius: 22px; padding: 30px 24px; text-align: center; transition: transform .15s ease; }
+  .dish:hover{ transform: translateY(-4px); }
+  .dish:nth-child(3n+1){ border-color: var(--pink); }
+  .dish:nth-child(3n+2){ border-color: var(--yellow); }
+  .dish:nth-child(3n+3){ border-color: var(--accent); }
+  .dish .icon{ font-size: 2.2rem; margin-bottom: 14px; }
+  .dish h3{ margin: 0 0 10px; font-size: 1.1rem; font-weight: 700; }
+  .dish p{ color: var(--muted); font-size: .9rem; margin: 0; }
+  .dish .price{ display: inline-block; margin-top: 16px; padding: 6px 18px; border-radius: 999px; background: var(--bg); color: var(--accent-dark); font-weight: 800; font-size: .95rem; font-family: "Baloo 2"; }
+
+  /* Sugestão da casa */
+  section.featured{ padding: 10px 0 90px; }
+  .featured-grid{ display: grid; grid-template-columns: .9fr 1fr; gap: 50px; align-items: center; }
+  .price-big{ font-family: "Baloo 2"; font-size: 1.9rem; font-weight: 800; color: var(--accent-dark); margin: 0 0 26px; }
+
+  /* Galeria */
+  section.gallery{ padding: 10px 0 90px; }
+  .gallery-grid{ display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 140px; grid-auto-flow: dense; gap: 16px; }
+  .gallery-grid figure{ margin: 0; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 24px rgba(139,47,176,.18); }
+  .gallery-grid img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+  .gallery-grid figure:hover img{ transform: scale(1.06); }
+  .gallery-grid .g-big{ grid-column: span 2; grid-row: span 2; }
+  .gallery-grid .g-tall{ grid-row: span 2; }
+  .gallery-grid .g-wide{ grid-column: span 2; }
+
+  /* Nosso espaço */
+  section.ambiente{ padding: 10px 0 90px; }
+  .ambiente-band{
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 40px rgba(139,47,176,.25);
+  }
+  .ambiente-band::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(106,31,138,.9), rgba(255,93,162,.55));
+  }
+  .ambiente-content{ position: relative; z-index: 1; color: #fff; padding: 50px 60px; max-width: 540px; }
+  .ambiente-content .tag{ color: var(--yellow); }
+  .ambiente-content h2{ color: #fff; font-size: 2rem; margin: 0 0 14px; font-weight: 800; }
+  .ambiente-content .sub{ color: rgba(255,255,255,.92); max-width: none; }
+  .amenities{ display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 0; list-style: none; padding: 0; }
+  .amenities li{ background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 8px 16px; border-radius: 999px; font-size: .82rem; font-weight: 700; }
+
+  /* Depoimentos */
+  section.testimonials{ padding: 10px 0 70px; }
+  .testi-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testi{ background: var(--bg-alt); border: 2px solid var(--border); border-radius: 22px; padding: 28px 26px; }
+  .testi .stars{ color: var(--yellow); letter-spacing: 2px; margin-bottom: 12px; font-size: .95rem; }
+  .testi p.quote{ color: var(--text); font-size: .95rem; line-height: 1.6; margin: 0 0 18px; font-style: italic; }
+  .testi .who{ display: flex; align-items: center; gap: 10px; }
+  .testi .avatar{ width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-family: "Baloo 2"; }
+  .testi .name{ font-weight: 700; font-size: .9rem; }
+  .testi .role{ font-size: .78rem; color: var(--muted); }
+  p.demo-note{ text-align: center; color: var(--muted); font-size: .78rem; margin: 30px auto 0; max-width: 60ch; }
+
+  /* Horário & pedidos */
+  section.info{ padding: 10px 0 20px; }
+  .info-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .info-card{ background: var(--bg-alt); border: 2px solid var(--border); border-radius: 22px; padding: 26px 20px; text-align: center; }
+  .info-card .icon{ font-size: 1.8rem; margin-bottom: 10px; }
+  .info-card h4{ margin: 0 0 6px; font-size: .95rem; font-family: "Baloo 2"; color: var(--accent-dark); }
+  .info-card p{ margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.5; }
+
+  .cta-strip{
+    background: linear-gradient(120deg, var(--accent-dark), var(--pink));
+    color: #fff;
+    text-align: center;
+    padding: 60px 24px;
+    border-radius: 32px;
+    max-width: 1032px;
+    margin: 0 auto 70px;
+  }
+  .cta-strip h2{ margin: 0 0 22px; font-weight: 800; }
+  .cta-strip .btn{ background: #fff; color: var(--accent-dark); box-shadow: none; }
+
+  footer{ text-align: center; padding: 24px 0; color: var(--muted); font-size: .85rem; }
+
+  /* Tablet: fills the gap between the old 760px cutoff and desktop (900px+)
+     so widths like 768px never fall back to the cramped 3-4 column desktop grids. */
+  @media (max-width: 899px){
+    .hero-grid{ gap: 30px; }
+    .dishes{ grid-template-columns: repeat(2, 1fr); }
+    .featured-grid{ gap: 30px; }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; }
+    .testi-grid{ grid-template-columns: repeat(2, 1fr); }
+    .info-grid{ grid-template-columns: repeat(2, 1fr); }
+    .ambiente-content{ padding: 40px 32px; max-width: 100%; }
+  }
+
+  @media (max-width: 760px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .blob-frame{ order: -1; max-width: 320px; margin: 0 auto; }
+    .hero-stats{ justify-content: center; text-align: center; }
+    .dishes{ grid-template-columns: 1fr; }
+    .featured-grid{ grid-template-columns: 1fr; }
+    .featured-grid .blob-frame{ max-width: 320px; }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 120px; }
+    .ambiente-content{ padding: 34px 26px; max-width: 100%; }
+    .testi-grid{ grid-template-columns: 1fr; }
+    .info-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px){
+    .hero{ padding: 30px 0 60px; }
+    .hero-text h1{ margin-bottom: 14px; }
+    .hero-stats{ gap: 20px 28px; margin-top: 26px; }
+    section.menu{ padding: 20px 0 60px; }
+    section.featured{ padding: 0 0 60px; }
+    section.gallery{ padding: 0 0 60px; }
+    section.ambiente{ padding: 0 0 60px; }
+    section.testimonials{ padding: 0 0 50px; }
+    .cta-strip{ padding: 44px 20px; border-radius: 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">🍇 Bowl & Berry</div>
+      <nav>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#sugestao">Destaque</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#pedido">Pedir</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="blob"></div>
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="tag">Açaí gelado todo dia</p>
+        <h1>Seu açaí do jeito que você gosta.</h1>
+        <p class="sub">Açaí cremoso, frutas frescas e coberturas variadas. Monte seu bowl ou peça um dos nossos combos.</p>
+        <a href="#pedido" class="btn">Montar meu açaí</a>
+        <div class="hero-stats">
+          <div class="stat"><strong>100%</strong><span>Açaí puro do Pará</span></div>
+          <div class="stat"><strong>9</strong><span>Opções no cardápio</span></div>
+          <div class="stat"><strong>~10 min</strong><span>Do pedido ao balcão</span></div>
+        </div>
+      </div>
+      <div class="blob-frame">
+        <img src="https://images.unsplash.com/photo-1536628099736-beb96f0b3119?auto=format&fit=crop&w=900&q=80" alt="Copo de açaí cremoso com frutas">
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="cardapio">
+    <div class="container">
+      <h2 class="section-title">Nosso Cardápio</h2>
+      <p class="section-sub">Do copo tradicional aos bowls mais pedidos — escolha o seu tamanho ou monte do seu jeito, com as coberturas que quiser.</p>
+      <div class="dishes">
+        <div class="dish">
+          <div class="icon">🥤</div>
+          <h3>Copo Tradicional 300ml</h3>
+          <p>Açaí puro batido na hora, com 2 coberturas grátis à sua escolha.</p>
+          <span class="price">R$ 14,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍇</div>
+          <h3>Copo Médio 500ml</h3>
+          <p>Açaí cremoso com banana, morango e granola por cima.</p>
+          <span class="price">R$ 21,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🧊</div>
+          <h3>Copo Grande 700ml</h3>
+          <p>Açaí batido no ponto, com até 4 coberturas à sua escolha.</p>
+          <span class="price">R$ 27,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍓</div>
+          <h3>Tropical Bowl</h3>
+          <p>Açaí, morango, banana, granola e mel.</p>
+          <span class="price">R$ 24,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🥜</div>
+          <h3>Power Bowl</h3>
+          <p>Açaí, pasta de amendoim, banana e castanhas.</p>
+          <span class="price">R$ 28,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍫</div>
+          <h3>Chocolate Bowl</h3>
+          <p>Açaí, nutella, morango e granulado.</p>
+          <span class="price">R$ 26,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🥭</div>
+          <h3>Bowl Tropicana</h3>
+          <p>Açaí, manga, maracujá, coco ralado e granola crocante.</p>
+          <span class="price">R$ 29,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🥝</div>
+          <h3>Vegano Green Bowl</h3>
+          <p>Açaí, banana, kiwi, chia e leite de coco, sem mel.</p>
+          <span class="price">R$ 25,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">💑</div>
+          <h3>Combo Casal</h3>
+          <p>2 copos grandes de açaí + 1 água de coco pra compartilhar.</p>
+          <span class="price">R$ 44,90</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured" id="sugestao">
+    <div class="container featured-grid">
+      <div class="blob-frame">
+        <img src="https://images.unsplash.com/photo-1516705051158-795390ef6664?auto=format&fit=crop&w=1000&q=80" alt="Tigela de açaí com granola, frutas vermelhas e mel">
+      </div>
+      <div class="featured-text">
+        <p class="tag">Sugestão da casa</p>
+        <h2>Bowl Tropicana</h2>
+        <p class="sub">Um mergulho nos trópicos: açaí batido na hora com manga, maracujá, coco ralado e granola crocante por cima. O bowl mais pedido da semana por aqui.</p>
+        <p class="price-big">R$ 29,90</p>
+        <a href="#pedido" class="btn">Quero esse bowl</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="container">
+      <h2 class="section-title">Um gostinho da Bowl & Berry</h2>
+      <p class="section-sub">Fotos pra você sentir o clima antes mesmo de chegar.</p>
+      <div class="gallery-grid">
+        <figure class="g-big">
+          <img src="https://images.unsplash.com/photo-1753379038304-03b314ed8901?auto=format&fit=crop&w=1200&q=80" alt="Frutas tropicais coloridas expostas em banca de feira">
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1677073908836-6f67dbd2debc?auto=format&fit=crop&w=800&q=80" alt="Mirtilos frescos em close-up">
+        </figure>
+        <figure class="g-tall">
+          <img src="https://images.unsplash.com/photo-1685130050521-821d122f4915?auto=format&fit=crop&w=800&q=80" alt="Morangos frescos selecionados no mercado">
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1570197679264-d37000973d4a?auto=format&fit=crop&w=800&q=80" alt="Banana fatiada fresca sobre a bancada">
+        </figure>
+        <figure class="g-wide">
+          <img src="https://images.unsplash.com/photo-1473115209096-e0375dd6b3b3?auto=format&fit=crop&w=1200&q=80" alt="Água de coco gelada servida no copo">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="ambiente" id="espaco">
+    <div class="container">
+      <div class="ambiente-band" style="background-image: url('https://images.unsplash.com/photo-1583564345817-9735ebbc0569?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ambiente-content">
+          <p class="tag">Nosso espaço</p>
+          <h2>Um cantinho pra sentar e curtir</h2>
+          <p class="sub">Mesas na sombra, música tranquila e aquele clima de fim de tarde. Pode vir sozinho, em grupo ou com o cachorro — todo mundo é bem-vindo por aqui.</p>
+          <ul class="amenities">
+            <li>📶 Wi-Fi grátis</li>
+            <li>❄️ Ambiente climatizado</li>
+            <li>🐶 Pet friendly</li>
+            <li>🪑 Mesas para grupos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="depoimentos">
+    <div class="container">
+      <h2 class="section-title">O que a galera fala</h2>
+      <p class="section-sub">Alguns relatos de quem já provou.</p>
+      <div class="testi-grid">
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Fecho o expediente e já sei pra onde vou. O Bowl Tropicana é surreal."</p>
+          <div class="who">
+            <div class="avatar">M</div>
+            <div>
+              <div class="name">Marina</div>
+              <div class="role">Cliente frequente</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Peço toda semana pelo WhatsApp, chega geladinho e certinho no horário."</p>
+          <div class="who">
+            <div class="avatar">L</div>
+            <div>
+              <div class="name">Lucas</div>
+              <div class="role">Pedido por delivery</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Ambiente super gostoso pra tomar um açaí no fim da tarde com as amigas."</p>
+          <div class="who">
+            <div class="avatar">B</div>
+            <div>
+              <div class="name">Bia</div>
+              <div class="role">Cliente do bairro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note">*Depoimentos fictícios, criados apenas para fins de demonstração deste site.</p>
+    </div>
+  </section>
+
+  <section class="info" id="info">
+    <div class="container">
+      <h2 class="section-title">Horário & Como Pedir</h2>
+      <p class="section-sub">Escolha o jeito mais fácil pra você.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="icon">🕒</div>
+          <h4>Horário</h4>
+          <p>Seg a sáb, 11h às 22h. Dom e feriados, 12h às 20h.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">💬</div>
+          <h4>WhatsApp</h4>
+          <p>Chamada rápida, sem cadastro. Resposta em minutos.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🛵</div>
+          <h4>iFood & Rappi</h4>
+          <p>Também entregamos pelos principais apps de delivery.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🥤</div>
+          <h4>Retirada no balcão</h4>
+          <p>Peça com antecedência e retire sem enfrentar fila.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pedido">
+    <div class="cta-strip">
+      <h2>Peça o seu agora pelo WhatsApp</h2>
+      <a href="#" class="btn">Fazer pedido</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Projeto de demonstração criado por GirottoWebSites
+    </div>
+  </footer>
+</body>
+</html>

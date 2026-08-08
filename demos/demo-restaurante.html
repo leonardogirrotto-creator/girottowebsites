@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabor Caseiro — Restaurante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #fdf6ec;
+    --bg-alt: #ffffff;
+    --text: #3b2a1f;
+    --muted: #7a6a5c;
+    --accent: #b5502f;
+    --accent-dark: #8f3d22;
+    --border: #ecdfcd;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    font-family: "Source Sans 3", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  h1, h2, .brand{ font-family: "Playfair Display", Georgia, serif; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header{ position: absolute; top: 0; left: 0; right: 0; z-index: 5; padding: 26px 0; }
+  .header-inner{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .brand{ font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: .02em; }
+  nav a{ margin-left: 26px; color: rgba(255,255,255,.85); text-decoration: none; font-size: .92rem; }
+
+  .hero{
+    position: relative;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(20,12,6,.55) 0%, rgba(20,12,6,.75) 100%), url("https://images.unsplash.com/photo-1564638305579-5e395c9b62c7?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    color: #fff;
+  }
+  .hero-inner{ max-width: 620px; padding: 140px 24px 90px; }
+  .hero p.tag{ letter-spacing: .25em; text-transform: uppercase; color: #f0c9a8; font-size: .78rem; margin-bottom: 16px; }
+  .hero h1{ font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 20px; line-height: 1.2; font-weight: 800; }
+  .hero p.sub{ color: #ecdfd2; max-width: 44ch; margin: 0 0 32px; font-size: 1.1rem; line-height: 1.6; }
+  .hero .hero-actions{ display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn{
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: .95rem;
+    letter-spacing: .03em;
+    border: 1px solid transparent;
+  }
+  .btn.btn-outline{ background: transparent; border-color: rgba(255,255,255,.6); }
+
+  section.menu{ padding: 80px 0; }
+  h2.section-title{ text-align: center; font-size: 2.1rem; margin-bottom: 10px; }
+  p.section-sub{ text-align: center; color: var(--muted); max-width: 50ch; margin: 0 auto 50px; }
+
+  /* Prato em destaque */
+  .spotlight{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 54px;
+  }
+  .spotlight img{ width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block; }
+  .spotlight-text{ padding: 40px 44px; display: flex; flex-direction: column; justify-content: center; }
+  .spotlight-text .eyebrow{ text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; color: var(--accent); font-weight: 600; margin: 0 0 12px; }
+  .spotlight-text h3{ font-size: 1.7rem; margin: 0 0 14px; }
+  .spotlight-text p{ color: var(--muted); line-height: 1.7; margin: 0 0 20px; }
+  .spotlight-text .price{ font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); font-family: "Playfair Display", serif; }
+
+  .dishes{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+  .dish{ background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 28px 22px; text-align: center; }
+  .dish .icon{ font-size: 2rem; margin-bottom: 14px; }
+  .dish h3{ margin: 0 0 8px; font-size: 1.08rem; font-family: "Playfair Display", serif; }
+  .dish p{ color: var(--muted); font-size: .9rem; margin: 0 0 14px; line-height: 1.6; min-height: 3.2em; }
+  .dish .price{ font-weight: 700; color: var(--accent-dark); font-size: 1rem; }
+
+  /* Promoção da semana */
+  .promo{
+    position: relative;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(20,12,6,.6) 0%, rgba(20,12,6,.8) 100%), url("https://images.unsplash.com/photo-1626323418665-8cf7dfb52904?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+  }
+  .promo p.tag{ letter-spacing: .25em; text-transform: uppercase; color: #f0c9a8; font-size: .78rem; margin: 0 0 16px; }
+  .promo h2{ font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 18px; }
+  .promo p.sub{ max-width: 54ch; margin: 0 auto 30px; color: #ecdfd2; line-height: 1.7; font-size: 1.05rem; }
+
+  /* Ambiente */
+  .ambiente{ padding: 80px 0; background: var(--bg-alt); }
+  .ambiente-grid{ display: grid; grid-template-columns: 1.05fr 1fr; gap: 50px; align-items: center; }
+  .ambiente-grid img{ width: 100%; height: 420px; border-radius: 14px; object-fit: cover; display: block; }
+  .ambiente-text .section-title{ text-align: left; margin-bottom: 16px; }
+  .ambiente-text > p{ color: var(--muted); line-height: 1.75; margin: 0 0 24px; }
+  .ambiente-text ul{ list-style: none; padding: 0; margin: 0; }
+  .ambiente-text li{ padding: 12px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: .95rem; }
+  .ambiente-text li:first-child{ border-top: none; }
+  .ambiente-text li strong{ color: var(--text); }
+
+  /* Galeria */
+  .gallery{ padding: 80px 0; }
+  .gallery-grid{ display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 16px; }
+  .gallery-grid .g-item{ position: relative; border-radius: 10px; overflow: hidden; }
+  .gallery-grid .g-item img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery-grid .g-item:nth-child(1){ grid-column: span 2; grid-row: span 2; }
+  .gallery-grid .g-item:nth-child(4){ grid-column: span 2; }
+  .g-caption{ position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px; background: linear-gradient(0deg, rgba(20,12,6,.78), transparent); color: #fff; font-size: .8rem; letter-spacing: .02em; }
+
+  .story{
+    background: var(--accent-dark);
+    color: #fff;
+    padding: 70px 0;
+    text-align: center;
+  }
+  .story blockquote{
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-style: italic;
+    max-width: 30ch;
+    margin: 0 auto 20px;
+    line-height: 1.5;
+  }
+  .story cite{ font-style: normal; color: #f0c9a8; font-size: .9rem; letter-spacing: .05em; }
+
+  /* Informações práticas */
+  .info-bar{ background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 54px 0; }
+  .info-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; text-align: center; }
+  .info-grid .icon{ font-size: 1.6rem; margin-bottom: 10px; }
+  .info-grid h4{ margin: 0 0 6px; font-family: "Playfair Display", serif; font-size: 1.02rem; }
+  .info-grid p{ margin: 0; color: var(--muted); font-size: .87rem; line-height: 1.55; }
+
+  .cta-strip{ padding: 60px 0; text-align: center; }
+  .cta-strip h2{ margin: 0 0 12px; font-size: 1.7rem; }
+  .cta-strip p{ color: var(--muted); margin: 0 0 22px; }
+  .cta-strip .btn{ background: var(--accent-dark); }
+
+  footer{ text-align: center; padding: 26px 0; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); }
+
+  @media (max-width: 900px){
+    .dishes{ grid-template-columns: repeat(2, 1fr); }
+    .spotlight{ grid-template-columns: 1fr; }
+    .spotlight img{ min-height: 220px; }
+    .ambiente-grid{ grid-template-columns: 1fr; }
+    .ambiente-grid img{ height: 280px; }
+    .ambiente-text .section-title{ text-align: center; }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+    .gallery-grid .g-item:nth-child(1){ grid-column: span 2; grid-row: span 1; }
+    .info-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px){
+    header{ padding: 18px 0; }
+    .header-inner{ justify-content: center; text-align: center; }
+    nav a{ margin: 0 10px; font-size: .82rem; }
+    .hero{ min-height: 560px; }
+    .hero-inner{ padding: 130px 20px 60px; }
+    section.menu, .promo, .ambiente, .gallery, .story, .cta-strip{ padding-top: 56px; padding-bottom: 56px; }
+    .dishes{ grid-template-columns: 1fr; }
+    .spotlight-text{ padding: 30px 26px; }
+    .gallery-grid{ grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .gallery-grid .g-item:nth-child(1), .gallery-grid .g-item:nth-child(4){ grid-column: span 1; grid-row: span 1; }
+    .info-grid{ grid-template-columns: 1fr; }
+    .info-bar{ padding: 40px 0; }
+    .cta-strip h2{ font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">Sabor Caseiro</div>
+      <nav>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#ambiente">Ambiente</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#reservas">Reservas</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="tag">Comida caseira desde 1998</p>
+      <h1>O sabor de casa, direto na sua mesa.</h1>
+      <p class="sub">Pratos feitos com carinho, ingredientes frescos e a receita da vovó. Aberto todos os dias das 11h às 22h.</p>
+      <div class="hero-actions">
+        <a href="#cardapio" class="btn">Ver cardápio</a>
+        <a href="#reservas" class="btn btn-outline">Reservar mesa</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="cardapio">
+    <div class="container">
+      <h2 class="section-title">Destaques da casa</h2>
+      <p class="section-sub">Pratos que fazem sucesso todos os dias, preparados na hora com quem entende do assunto.</p>
+
+      <div class="spotlight">
+        <img src="https://images.unsplash.com/photo-1643381370167-383c9cfd4835?auto=format&fit=crop&w=900&q=80" alt="Prato feito caseiro com arroz, feijão, proteína grelhada e legumes">
+        <div class="spotlight-text">
+          <p class="eyebrow">O queridinho do almoço</p>
+          <h3>Prato Feito do Dia</h3>
+          <p>Arroz soltinho, feijão temperado, proteína do dia, salada fresca e uma farofa crocante — tudo montado na hora, do jeito que só comida de casa fica. O cardápio muda de segunda a sábado.</p>
+          <span class="price">R$ 32,90</span>
+        </div>
+      </div>
+
+      <div class="dishes">
+        <div class="dish">
+          <div class="icon">🍗</div>
+          <h3>Frango Grelhado ao Alho e Ervas</h3>
+          <p>Filé de peito suculento, temperado na hora, acompanha arroz branco e legumes salteados.</p>
+          <span class="price">R$ 36,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍲</div>
+          <h3>Feijoada Completa</h3>
+          <p>Servida às quartas e sábados, com couve, torresmo, laranja e farofa — a tradicional, sem pressa.</p>
+          <span class="price">R$ 42,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">⚖️</div>
+          <h3>Buffet a Quilo</h3>
+          <p>Mais de 25 opções entre carnes, saladas e guarnições, à vontade no seu ritmo.</p>
+          <span class="price">R$ 74,90 / kg</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🧆</div>
+          <h3>Filé à Parmegiana</h3>
+          <p>Empanado crocante, molho de tomate caseiro e queijo gratinado, com arroz e fritas.</p>
+          <span class="price">R$ 44,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🥘</div>
+          <h3>Feijão Tropeiro com Linguiça</h3>
+          <p>Receita de família estilo mineiro, com couve, ovo e torresminho crocante.</p>
+          <span class="price">R$ 34,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🥗</div>
+          <h3>Salada Completa Self-Service</h3>
+          <p>Folhas frescas, legumes da estação e molhos da casa, servida à vontade.</p>
+          <span class="price">R$ 27,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍮</div>
+          <h3>Pudim de Leite Caseiro</h3>
+          <p>Receita da vovó, cremoso, com calda de caramelo feita na hora.</p>
+          <span class="price">R$ 11,90</span>
+        </div>
+        <div class="dish">
+          <div class="icon">🍫</div>
+          <h3>Sobremesas do Dia</h3>
+          <p>Brigadeiro, bolo caseiro e doce de leite, direto da cozinha da casa.</p>
+          <span class="price">R$ 8,90</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo">
+    <div class="container">
+      <p class="tag">Promoção da semana</p>
+      <h2>Sexta é dia de carnes na brasa</h2>
+      <p class="sub">Toda sexta-feira o buffet ganha uma estação especial de carnes assadas na hora, sem custo extra no quilo. Chegue cedo — costuma esvaziar rápido.</p>
+      <a href="#cardapio" class="btn">Conferir cardápio completo</a>
+    </div>
+  </section>
+
+  <section class="ambiente" id="ambiente">
+    <div class="container ambiente-grid">
+      <img src="https://images.unsplash.com/photo-1758243488328-148e39e5e6b1?auto=format&fit=crop&w=900&q=80" alt="Salão aconchegante do restaurante com mesas de madeira e luz natural">
+      <div class="ambiente-text">
+        <h2 class="section-title">Nosso espaço</h2>
+        <p>Um cantinho aconchegante para almoçar em família ou reunir a equipe do trabalho, com mesas de madeira, luz natural e aquele clima de casa da vovó — sem pressa nenhuma.</p>
+        <ul>
+          <li><strong>Capacidade:</strong> até 60 lugares, incluindo área externa coberta</li>
+          <li><strong>Espaço kids:</strong> cantinho com mesinha e giz de cera para os pequenos</li>
+          <li><strong>Estacionamento:</strong> vagas próprias em frente ao restaurante</li>
+          <li><strong>Acessibilidade:</strong> entrada e banheiro adaptados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="container">
+      <h2 class="section-title">Galeria</h2>
+      <p class="section-sub">Um gostinho do que te espera por aqui, do fogão à mesa.</p>
+      <div class="gallery-grid">
+        <div class="g-item">
+          <img src="https://plus.unsplash.com/premium_photo-1724707432701-cb7808e3c3fa?auto=format&fit=crop&w=900&q=80" alt="Mesa de madeira posta em sala de jantar aconchegante">
+          <span class="g-caption">Clima de casa em cada detalhe</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1756831567129-a7f9e6ecb436?auto=format&fit=crop&w=700&q=80" alt="Interior rústico do restaurante com vigas de madeira">
+          <span class="g-caption">Ambiente rústico e acolhedor</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1526401363794-c96708fb8089?auto=format&fit=crop&w=700&q=80" alt="Panela de molho caseiro cozinhando no fogão">
+          <span class="g-caption">Tudo feito no fogão, sem pressa</span>
+        </div>
+        <div class="g-item">
+          <img src="https://images.unsplash.com/photo-1647093953000-9065ed6f85ef?auto=format&fit=crop&w=900&q=80" alt="Prato branco com arroz e legumes frescos">
+          <span class="g-caption">Saladas e guarnições fresquinhas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="container">
+      <blockquote>"Cada prato carrega uma receita de família e um pouco de afeto."</blockquote>
+      <cite>— Cozinha Sabor Caseiro</cite>
+    </div>
+  </section>
+
+  <section class="info-bar">
+    <div class="container">
+      <div class="info-grid">
+        <div>
+          <div class="icon">🕒</div>
+          <h4>Horário de funcionamento</h4>
+          <p>Seg a sáb, 11h às 15h30 e 18h às 22h<br>Domingo, 11h30 às 16h</p>
+        </div>
+        <div>
+          <div class="icon">💳</div>
+          <h4>Formas de pagamento</h4>
+          <p>Dinheiro, Pix, débito e crédito</p>
+        </div>
+        <div>
+          <div class="icon">🛵</div>
+          <h4>Delivery e retirada</h4>
+          <p>Pedidos pelo WhatsApp ou pelo app de entrega da região</p>
+        </div>
+        <div>
+          <div class="icon">🅿️</div>
+          <h4>Estacionamento</h4>
+          <p>Vagas próprias, bem na porta do restaurante</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip" id="reservas">
+    <div class="container">
+      <h2>Reserve sua mesa</h2>
+      <p>Para grupos e datas especiais, avise com antecedência — adoramos receber famílias grandes.</p>
+      <a href="#" class="btn">Fazer reserva</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Projeto de demonstração criado por GirottoWebSites
+    </div>
+  </footer>
+</body>
+</html>

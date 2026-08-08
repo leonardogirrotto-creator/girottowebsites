@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equilíbrio — Estúdio de Yoga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f6f7f2;
+    --bg-alt: #ffffff;
+    --text: #2f3b2e;
+    --muted: #6b7a68;
+    --accent: #7c9473;
+    --accent-dark: #5f7757;
+    --border: #e1e8dc;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin: 0;
+    font-family: "Jost", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 300;
+  }
+  h1, h2{ font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; }
+  .container{ max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header{ padding: 30px 0; }
+  .header-inner{ display: flex; justify-content: space-between; align-items: center; }
+  .brand{ font-family: "Cormorant Garamond", serif; font-size: 1.5rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-dark); }
+  nav a{ margin-left: 30px; color: var(--text); text-decoration: none; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+
+  .hero{ padding: 40px 0 0; }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0;
+  }
+  .hero-text{ padding: 40px 56px 60px 0; }
+  .hero-text p.tag{ color: var(--accent-dark); letter-spacing: .3em; text-transform: uppercase; font-size: .72rem; margin-bottom: 22px; }
+  .hero-text h1{ font-size: clamp(2.4rem, 5vw, 3.6rem); margin: 0 0 24px; line-height: 1.25; }
+  .hero-text p.sub{ color: var(--muted); max-width: 40ch; margin: 0 0 36px; font-size: 1.05rem; line-height: 1.8; }
+  .btn{
+    display: inline-block;
+    background: transparent;
+    color: var(--accent-dark);
+    padding: 15px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: .82rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border: 1px solid var(--accent-dark);
+  }
+  .hero-photo{
+    height: 560px;
+    background: url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+    border-radius: 4px 0 0 4px;
+  }
+
+  section.classes{ padding: 90px 0; }
+  h2.section-title{ text-align: center; font-size: 2.2rem; margin-bottom: 8px; letter-spacing: .02em; }
+  p.section-sub{ text-align: center; color: var(--muted); max-width: 50ch; margin: 0 auto 56px; font-size: .95rem; }
+  .grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card{ background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 40px 26px; text-align: center; }
+  .card .icon{ font-size: 1.8rem; margin-bottom: 18px; color: var(--accent-dark); }
+  .card h3{ margin: 0 0 12px; font-size: 1.3rem; font-family: "Cormorant Garamond", serif; font-weight: 600; }
+  .card p{ color: var(--muted); font-size: .88rem; margin: 0; line-height: 1.7; }
+  .card .price{ margin: 18px 0 2px; font-family: "Cormorant Garamond", serif; color: var(--accent-dark); font-size: 1.3rem; font-weight: 600; }
+  .card .price-note{ font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+  .quote-strip{ text-align: center; padding: 30px 0 90px; }
+  .quote-strip p{ font-family: "Cormorant Garamond", serif; font-size: clamp(1.3rem, 3vw, 1.7rem); font-style: italic; color: var(--accent-dark); max-width: 34ch; margin: 0 auto; line-height: 1.6; }
+
+  /* Nosso Espaço */
+  section.espaco{ padding: 90px 0; background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .espaco-grid{ display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+  .espaco-photos{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .espaco-photos img{ width: 100%; height: 210px; object-fit: cover; border-radius: 4px; display: block; }
+  .espaco-photos img:first-child{ grid-column: 1 / -1; height: 250px; }
+  .espaco-text p.tag{ color: var(--accent-dark); letter-spacing: .3em; text-transform: uppercase; font-size: .72rem; margin-bottom: 18px; }
+  .espaco-text h2{ font-size: 2rem; margin: 0 0 20px; line-height: 1.25; }
+  .espaco-text p.desc{ color: var(--muted); line-height: 1.85; font-size: .95rem; margin: 0 0 18px; }
+  .mini-note{ background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 22px; font-size: .86rem; color: var(--muted); line-height: 1.7; }
+  .mini-note strong{ color: var(--accent-dark); }
+
+  /* Galeria */
+  section.gallery{ padding: 90px 0; }
+  .gallery-grid{ display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; grid-auto-flow: dense; gap: 14px; }
+  .gallery-grid img{ width: 100%; height: 100%; object-fit: cover; border-radius: 4px; display: block; }
+  .gallery-grid .g-big{ grid-column: span 2; grid-row: span 2; }
+  .gallery-grid .g-tall{ grid-row: span 2; }
+
+  /* Depoimentos */
+  section.testimonials{ padding: 90px 0; background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .testi-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testi-card{ background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 34px 28px; }
+  .testi-card .stars{ color: var(--accent-dark); font-size: .85rem; letter-spacing: .12em; margin: 0 0 16px; }
+  .testi-card .quote{ font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.05rem; color: var(--text); line-height: 1.75; margin: 0 0 22px; }
+  .testi-name{ display: flex; align-items: center; gap: 12px; }
+  .testi-avatar{ width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: "Cormorant Garamond", serif; font-size: 1.05rem; flex-shrink: 0; }
+  .testi-name span{ font-size: .8rem; color: var(--muted); letter-spacing: .04em; }
+
+  /* Retiro / promo band */
+  .promo-band{
+    position: relative;
+    padding: 110px 0;
+    text-align: center;
+    color: #fff;
+    background:
+      linear-gradient(180deg, rgba(47,59,46,.6), rgba(47,59,46,.78)),
+      url("https://images.unsplash.com/photo-1760774714285-61ff516f86c5?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+  }
+  .promo-band p.tag{ color: #e7ecdf; letter-spacing: .3em; text-transform: uppercase; font-size: .72rem; margin-bottom: 18px; }
+  .promo-band h2{ color: #fff; font-size: 2.2rem; margin: 0 0 18px; }
+  .promo-band p.desc{ max-width: 48ch; margin: 0 auto 26px; color: #eef1ea; line-height: 1.85; font-size: .96rem; }
+  .promo-band .price{ font-family: "Cormorant Garamond", serif; font-size: 1.3rem; margin-bottom: 8px; }
+  .promo-band .date-note{ font-size: .78rem; letter-spacing: .04em; color: #d9e0d2; margin-bottom: 30px; }
+
+  /* Horários */
+  section.hours{ padding: 90px 0; }
+  .hours-wrap{ max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .hours-col h3{ font-family: "Cormorant Garamond", serif; font-size: 1.3rem; margin: 0 0 20px; color: var(--accent-dark); font-weight: 600; }
+  .hours-list{ list-style: none; margin: 0; padding: 0; }
+  .hours-list li{ display: flex; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: .9rem; color: var(--muted); }
+  .hours-list li span:first-child{ color: var(--text); }
+  .book-list{ list-style: none; margin: 0; padding: 0; }
+  .book-list li{ padding: 11px 0; border-bottom: 1px solid var(--border); font-size: .9rem; color: var(--muted); }
+  .book-note{ margin: 16px 0 0; font-size: .8rem; color: var(--muted); font-style: italic; }
+
+  .cta-strip{ background: var(--accent-dark); color: #fff; text-align: center; padding: 70px 0; }
+  .cta-strip h2{ margin: 0 0 26px; letter-spacing: .02em; }
+  footer{ text-align: center; padding: 28px 0; color: var(--muted); font-size: .8rem; }
+
+  /* Tablet (e.g. 768px iPads): the old single 760px breakpoint below left
+     everything above it at full 3-4 column desktop widths, so cards got
+     squeezed into narrow columns instead of collapsing. This tier steps
+     the wide grids down to 2 columns while keeping desktop (900px+) intact. */
+  @media (max-width: 899px) and (min-width: 761px){
+    .grid{ grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .testi-grid{ grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+    .gallery-grid .g-big{ grid-column: span 2; grid-row: span 1; }
+    .gallery-grid .g-tall{ grid-row: span 1; }
+
+    .hero-photo{ height: 420px; }
+    .hero-text{ padding: 40px 32px 50px 0; }
+
+    .promo-band{ padding: 90px 0; }
+  }
+
+  @media (max-width: 760px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-photo{ height: 320px; border-radius: 4px; order: -1; }
+    .hero-text{ padding: 40px 0 50px; }
+    .grid{ grid-template-columns: 1fr; }
+
+    .header-inner{ flex-wrap: wrap; row-gap: 12px; }
+    nav a{ margin-left: 0; margin-right: 22px; }
+
+    .espaco-grid{ grid-template-columns: 1fr; gap: 32px; }
+    .espaco-photos{ order: -1; }
+
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; }
+    .gallery-grid .g-big{ grid-column: span 2; grid-row: span 1; }
+    .gallery-grid .g-tall{ grid-row: span 1; }
+
+    .testi-grid{ grid-template-columns: 1fr; }
+
+    .promo-band{ padding: 80px 0; }
+
+    .hours-wrap{ grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  /* Small phones: tighten spacing further so nothing feels cramped once
+     the phone tier above has already collapsed the grids to 1 column. */
+  @media (max-width: 480px){
+    .hero-text h1{ font-size: clamp(1.9rem, 8vw, 2.5rem); }
+    .card{ padding: 32px 20px; }
+    .grid{ gap: 16px; }
+    .testi-grid{ gap: 16px; }
+    .promo-band{ padding: 56px 0; }
+    .promo-band h2{ font-size: 1.7rem; }
+    .cta-strip{ padding: 50px 0; }
+    .btn{ padding: 14px 26px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">Equilíbrio</div>
+      <nav>
+        <a href="#classes">Aulas</a>
+        <a href="#espaco">Espaço</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#horarios">Horários</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <p class="tag">Estúdio de Yoga</p>
+          <h1>Respire fundo. Encontre seu equilíbrio.</h1>
+          <p class="sub">Aulas para todos os níveis, num espaço pensado para desacelerar e reconectar corpo e mente.</p>
+          <a href="#" class="btn">Agendar aula experimental</a>
+        </div>
+        <div class="hero-photo"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="classes" id="classes">
+    <div class="container">
+      <h2 class="section-title">Modalidades &amp; planos</h2>
+      <p class="section-sub">Escolha a modalidade ideal para o seu momento e o plano que cabe na sua rotina.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">🧘</div>
+          <h3>Hatha Yoga</h3>
+          <p>Posturas e respiração para iniciantes, num ritmo calmo e consciente.</p>
+          <div class="price">R$ 60,00</div>
+          <div class="price-note">aula avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">🌿</div>
+          <h3>Yin Yoga</h3>
+          <p>Posturas passivas de longa duração para soltar tensões profundas.</p>
+          <div class="price">R$ 60,00</div>
+          <div class="price-note">aula avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">☀️</div>
+          <h3>Vinyasa Flow</h3>
+          <p>Sequências fluidas conectadas pela respiração, para todos os níveis.</p>
+          <div class="price">R$ 65,00</div>
+          <div class="price-note">aula avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">🕯️</div>
+          <h3>Yoga Restaurativa</h3>
+          <p>Práticas suaves com apoio de mantas e bolsters, foco total em relaxar.</p>
+          <div class="price">R$ 65,00</div>
+          <div class="price-note">aula avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">🪷</div>
+          <h3>Meditação Guiada</h3>
+          <p>Sessões de 45 minutos para acalmar a mente e reduzir a ansiedade.</p>
+          <div class="price">R$ 45,00</div>
+          <div class="price-note">sessão avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">🤰</div>
+          <h3>Yoga para Gestantes</h3>
+          <p>Turma exclusiva, com adaptações seguras para cada trimestre da gestação.</p>
+          <div class="price">R$ 70,00</div>
+          <div class="price-note">aula avulsa</div>
+        </div>
+        <div class="card">
+          <div class="icon">👤</div>
+          <h3>Aula Particular</h3>
+          <p>Atendimento individual, no seu ritmo, presencial no estúdio ou a domicílio.</p>
+          <div class="price">R$ 150,00</div>
+          <div class="price-note">por hora</div>
+        </div>
+        <div class="card">
+          <div class="icon">📅</div>
+          <h3>Plano Mensal 2x</h3>
+          <p>Duas aulas semanais fixas, na modalidade que você escolher.</p>
+          <div class="price">R$ 220,00</div>
+          <div class="price-note">por mês</div>
+        </div>
+        <div class="card">
+          <div class="icon">♾️</div>
+          <h3>Plano Ilimitado</h3>
+          <p>Acesso livre a todas as aulas da grade, quantas vezes você quiser.</p>
+          <div class="price">R$ 380,00</div>
+          <div class="price-note">por mês</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-strip">
+    <div class="container">
+      <p>"Yoga não é sobre tocar os pés, é sobre o que você aprende no caminho até lá."</p>
+    </div>
+  </section>
+
+  <section class="espaco" id="espaco">
+    <div class="container espaco-grid">
+      <div class="espaco-photos">
+        <img src="https://plus.unsplash.com/premium_photo-1664382465641-997aa3b73907?auto=format&fit=crop&w=1000&q=80" alt="Vela acesa antes da prática de meditação no Equilíbrio">
+        <img src="https://plus.unsplash.com/premium_photo-1702056249967-08043c362868?auto=format&fit=crop&w=700&q=80" alt="Chá gelado e sucos naturais servidos após a aula">
+      </div>
+      <div class="espaco-text">
+        <p class="tag">O estúdio</p>
+        <h2>Um espaço pensado para desacelerar</h2>
+        <p class="desc">Piso de madeira, luz natural entrando pelas janelas amplas e um cheiro suave de sândalo no ar — assim é a nossa sala principal, com capacidade para até 18 alunos por turma. Tapetes, blocos, almofadas e mantas ficam disponíveis para quem ainda não tem os seus.</p>
+        <div class="mini-note"><strong>Cantinho do chá:</strong> depois da prática, sirva-se de chá gelado e água aromatizada com ervas, por nossa conta.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="container">
+      <h2 class="section-title">Um dia no Equilíbrio</h2>
+      <p class="section-sub">Momentos reais da nossa rotina — das aulas em grupo aos detalhes que tornam a prática mais gostosa.</p>
+      <div class="gallery-grid">
+        <img class="g-big" src="https://images.unsplash.com/photo-1761035190790-aa1a3472f7fc?auto=format&fit=crop&w=1200&q=80" alt="Turma em prática conjunta na sala principal do estúdio">
+        <img src="https://plus.unsplash.com/premium_photo-1723759271930-3514bb76abb4?auto=format&fit=crop&w=700&q=80" alt="Aluna enrolando o tapete ao final da aula">
+        <img class="g-tall" src="https://images.unsplash.com/photo-1758599879607-df3c247332cd?auto=format&fit=crop&w=700&q=80" alt="Aluno praticando yoga em sessão matinal">
+        <img src="https://plus.unsplash.com/premium_photo-1666264200744-51f90d07c09e?auto=format&fit=crop&w=700&q=80" alt="Postura de yoga durante aula de Vinyasa Flow">
+        <img src="https://plus.unsplash.com/premium_photo-1661255362632-680717374ea2?auto=format&fit=crop&w=700&q=80" alt="Momento de meditação sentada em silêncio">
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials" id="depoimentos">
+    <div class="container">
+      <h2 class="section-title">Depoimentos (ilustrativos)</h2>
+      <p class="section-sub">Relatos fictícios, criados apenas para ilustrar como é a experiência de praticar no Equilíbrio.</p>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <p class="stars">★★★★★</p>
+          <p class="quote">"Cheguei sem nunca ter feito yoga e hoje não passo uma semana sem minha aula de Vinyasa. O espaço é lindo e os professores têm muita paciência."</p>
+          <div class="testi-name">
+            <div class="testi-avatar">M</div>
+            <span>Marina, aluna há 8 meses</span>
+          </div>
+        </div>
+        <div class="testi-card">
+          <p class="stars">★★★★★</p>
+          <p class="quote">"A Yoga Restaurativa das quintas virou meu ritual antiestresse. Saio de lá com a cabeça completamente diferente."</p>
+          <div class="testi-name">
+            <div class="testi-avatar">R</div>
+            <span>Rafael, aluno há 1 ano</span>
+          </div>
+        </div>
+        <div class="testi-card">
+          <p class="stars">★★★★★</p>
+          <p class="quote">"Fiz o retiro de fim de semana e voltei renovada. Recomendo pra quem precisa desacelerar de verdade."</p>
+          <div class="testi-name">
+            <div class="testi-avatar">B</div>
+            <span>Beatriz, aluna há 3 meses</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo-band">
+    <div class="container">
+      <p class="tag">Programação especial</p>
+      <h2>Retiro de Yoga à Beira-Mar</h2>
+      <p class="desc">Um final de semana completo de práticas ao ar livre, meditação guiada e alimentação consciente, em parceria com uma pousada na costa. Vagas limitadas a 20 participantes.</p>
+      <p class="price">R$ 890,00 por pessoa</p>
+      <p class="date-note">Inclui hospedagem, refeições e todas as atividades · próxima turma: 3 a 5 de outubro</p>
+      <a href="#" class="btn" style="border-color:#fff; color:#fff;">Garantir minha vaga</a>
+    </div>
+  </section>
+
+  <section class="hours" id="horarios">
+    <div class="container hours-wrap">
+      <div class="hours-col">
+        <h3>Horário de funcionamento</h3>
+        <ul class="hours-list">
+          <li><span>Segunda a sexta</span><span>6h às 21h</span></li>
+          <li><span>Sábado</span><span>8h às 13h</span></li>
+          <li><span>Domingo</span><span>fechado*</span></li>
+        </ul>
+        <p class="book-note">*exceto workshops e retiros especiais</p>
+      </div>
+      <div class="hours-col">
+        <h3>Como agendar</h3>
+        <ul class="book-list">
+          <li>Pelo WhatsApp do estúdio</li>
+          <li>Pelo nosso aplicativo de agendamento</li>
+          <li>Diretamente na recepção</li>
+        </ul>
+        <p class="book-note">Vagas limitadas por turma — chegue 10 minutos antes do horário.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2>Sua primeira aula é por nossa conta</h2>
+      <a href="#" class="btn" style="border-color:#fff; color:#fff;">Reservar horário</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Projeto de demonstração criado por GirottoWebSites
+    </div>
+  </footer>
+</body>
+</html>
