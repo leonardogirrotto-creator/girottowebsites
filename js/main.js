@@ -45,23 +45,50 @@
   }
 
   var form = document.getElementById("contact-form");
+  var formStatus = document.getElementById("form-status");
+
+  function setFormStatus(text, isError) {
+    if (!formStatus) return;
+    formStatus.textContent = text;
+    formStatus.classList.toggle("is-error", !!isError);
+    formStatus.classList.toggle("is-success", !isError && !!text);
+  }
+
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      if (!window.supabaseClient) {
+        setFormStatus("Não foi possível enviar agora. Tente novamente em instantes.", true);
+        return;
+      }
+
       var name = form.name.value.trim();
       var email = form.email.value.trim();
       var project = form.project.value;
       var message = form.message.value.trim();
+      var submitBtn = form.querySelector("button[type=submit]");
 
-      var subject = encodeURIComponent("Orçamento de site — " + name);
-      var body = encodeURIComponent(
-        "Nome: " + name +
-        "\nE-mail: " + email +
-        "\nTipo de projeto: " + project +
-        "\n\nMensagem:\n" + message
-      );
+      submitBtn.disabled = true;
+      setFormStatus("Enviando...", false);
 
-      window.location.href = "mailto:contato@girottowebsites.com?subject=" + subject + "&body=" + body;
+      window.supabaseClient
+        .from("solicitacoes")
+        .insert({
+          nome: name,
+          email: email,
+          tipo_projeto: project,
+          mensagem: message
+        })
+        .then(function (result) {
+          submitBtn.disabled = false;
+          if (result.error) {
+            setFormStatus("Erro ao enviar. Tente novamente ou fale pelo WhatsApp.", true);
+            return;
+          }
+          form.reset();
+          setFormStatus("Mensagem enviada! Retornaremos em breve.", false);
+        });
     });
   }
 })();

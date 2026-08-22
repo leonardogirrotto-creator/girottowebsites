@@ -525,6 +525,7 @@
         <textarea id="message" name="message" rows="4" required placeholder="Conte um pouco sobre o seu projeto..."></textarea>
 
         <button type="submit" class="btn btn-primary btn-full">Enviar mensagem</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -538,6 +539,8 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

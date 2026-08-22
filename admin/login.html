@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Admin | GirottoWebSites</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&lt;/&gt;</text></svg>">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="bg-code-layer" aria-hidden="true"></div>
+
+<div class="admin-page">
+  <div class="login-card">
+    <a href="../index.html" class="logo">
+      <span class="logo-bracket">&lt;</span>Girotto<span class="logo-accent">Web</span>Sites<span class="logo-bracket">/&gt;</span>
+    </a>
+    <h1>Área administrativa</h1>
+    <p class="login-sub">Entre com seu e-mail e senha</p>
+
+    <form class="login-form" id="login-form">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required placeholder="seu@email.com" autocomplete="username">
+
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" required placeholder="••••••••" autocomplete="current-password">
+
+      <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+      <p class="admin-error" id="login-error" style="display:none;"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/admin-login.js"></script>
+</body>
+</html>
