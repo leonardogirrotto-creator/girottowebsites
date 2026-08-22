@@ -872,6 +872,13 @@ body{
   color: var(--text);
   font-size: .82rem;
 }
+.btn-delete{
+  padding: 6px 12px;
+  font-size: .82rem;
+  color: #dc2626;
+  border-color: #dc2626;
+}
+.btn-delete:hover{ background: rgba(220, 38, 38, 0.1); border-color: #dc2626; color: #dc2626; }
 
 .admin-state{
   text-align: center;

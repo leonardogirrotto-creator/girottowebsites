@@ -65,6 +65,7 @@
 
       var name = form.name.value.trim();
       var email = form.email.value.trim();
+      var whatsapp = form.whatsapp.value.trim();
       var project = form.project.value;
       var message = form.message.value.trim();
       var submitBtn = form.querySelector("button[type=submit]");
@@ -77,13 +78,14 @@
         .insert({
           nome: name,
           email: email,
+          whatsapp: whatsapp,
           tipo_projeto: project,
           mensagem: message
         })
         .then(function (result) {
           submitBtn.disabled = false;
           if (result.error) {
-            setFormStatus("Erro ao enviar. Tente novamente ou fale pelo WhatsApp.", true);
+            setFormStatus("Erro ao enviar. Tente novamente em instantes.", true);
             return;
           }
           form.reset();

@@ -44,6 +44,43 @@
     return select;
   }
 
+  function digitsOnly(str) {
+    return (str || "").replace(/\D/g, "");
+  }
+
+  function buildDeleteButton(id, row) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-ghost btn-delete";
+    btn.textContent = "Excluir";
+    btn.addEventListener("click", function () {
+      var confirmed = window.confirm(
+        "Excluir a solicitação de " + row.nome + "? Essa ação não pode ser desfeita."
+      );
+      if (!confirmed) return;
+
+      btn.disabled = true;
+      window.supabaseClient
+        .from("solicitacoes")
+        .delete()
+        .eq("id", id)
+        .then(function (res) {
+          if (res.error) {
+            alert("Não foi possível excluir a solicitação.");
+            btn.disabled = false;
+            return;
+          }
+          var tr = btn.closest("tr");
+          if (tr) tr.remove();
+          if (!tableBody.children.length) {
+            stateEl.textContent = "Nenhuma solicitação recebida ainda.";
+            stateEl.style.display = "block";
+          }
+        });
+    });
+    return btn;
+  }
+
   function renderRows(rows) {
     tableBody.innerHTML = "";
 
@@ -56,15 +93,23 @@
     stateEl.style.display = "none";
 
     rows.forEach(function (row) {
+      var whatsappDigits = digitsOnly(row.whatsapp);
+      var whatsappCell = row.whatsapp
+        ? "<a href=\"https://wa.me/55" + whatsappDigits + "\" target=\"_blank\" rel=\"noopener\">" + escapeHtml(row.whatsapp) + "</a>"
+        : "—";
+
       var tr = document.createElement("tr");
       tr.innerHTML =
         "<td>" + formatDate(row.created_at) + "</td>" +
         "<td>" + escapeHtml(row.nome) + "</td>" +
         "<td><a href=\"mailto:" + escapeHtml(row.email) + "\">" + escapeHtml(row.email) + "</a></td>" +
+        "<td>" + whatsappCell + "</td>" +
         "<td>" + escapeHtml(row.tipo_projeto || "—") + "</td>" +
         "<td class=\"cell-msg\">" + escapeHtml(row.mensagem) + "</td>" +
-        "<td class=\"status-cell\"></td>";
+        "<td class=\"status-cell\"></td>" +
+        "<td class=\"actions-cell\"></td>";
       tr.querySelector(".status-cell").appendChild(buildStatusSelect(row.status, row.id));
+      tr.querySelector(".actions-cell").appendChild(buildDeleteButton(row.id, row));
       tableBody.appendChild(tr);
     });
   }
